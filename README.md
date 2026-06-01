@@ -194,6 +194,144 @@ curl https://YOUR-APP.up.railway.app/__debug
 
 ---
 
+## 🪟 دیپلوی روی ویندوز
+
+<details>
+<summary>📋 <b>مراحل دیپلوی در PowerShell (کلیک کن)</b></summary>
+
+### ۱. نصب Railway CLI
+
+PowerShell رو باز کن:
+
+```powershell
+npm install -g @railway/cli
+railway --version
+```
+
+خروجی موفق:
+```
+railway 4.x.x
+```
+
+---
+
+### ۲. لاگین
+
+```powershell
+railway login
+```
+
+> 💡 روی ویندوز لاگین مرورگری بهتر از توکن کار می‌کنه — مرورگر باز می‌شه، تأیید کن.
+
+تأیید لاگین:
+```powershell
+railway whoami
+```
+
+---
+
+### ۳. کلون پروژه
+
+```powershell
+git clone https://github.com/avacocloud/avaco-railway.git
+cd avaco-railway
+```
+
+---
+
+### ۴. ساخت پروژه Railway
+
+```powershell
+railway init --name avaco-railway
+```
+
+خروجی موفق:
+```
+Created project avaco-railway
+```
+
+---
+
+### ۵. دیپلوی
+
+```powershell
+railway up --detach
+```
+
+---
+
+### ۶. ست کردن متغیرها
+
+> ⚠️ روی ویندوز هر متغیر رو **جداگانه** ست کن (بدون `\`):
+
+```powershell
+railway variables --set "TARGET_DOMAIN=https://YOUR-SERVER:PORT"
+railway variables --set "PUBLIC_RELAY_PATH=/api"
+railway variables --set "RELAY_PATH=/api"
+railway variables --set "RELAY_KEY=your-secret-key"
+```
+
+---
+
+### ۷. دریافت دامنه
+
+```powershell
+railway domain
+```
+
+خروجی:
+```
+https://YOUR-APP.up.railway.app
+```
+
+---
+
+### ۸. ری‌دیپلوی بعد از تغییر متغیرها
+
+```powershell
+railway up --detach
+```
+
+> ⚠️ بعد از هر تغییر متغیر حتماً ری‌دیپلوی کن و منتظر اتمام build بمون.
+
+---
+
+### ۹. تست
+
+```powershell
+curl https://YOUR-APP.up.railway.app/__debug
+```
+
+خروجی موفق:
+```json
+{
+  "TARGET_BASE": "https://your-server:port",
+  "PUBLIC_RELAY_PATH": "/api",
+  "RELAY_PATH": "/api",
+  "RELAY_KEY_SET": true,
+  "UPSTREAM_TIMEOUT_MS": 0,
+  "MAX_INFLIGHT": 512,
+  "inFlight": 0
+}
+```
+
+---
+
+### دستورات مفید
+
+```powershell
+railway variables   # مشاهده متغیرها
+railway logs        # مشاهده لاگ‌ها
+railway status      # وضعیت پروژه
+railway domain      # مشاهده دامنه
+railway up --detach # ری‌دیپلوی
+railway whoami      # تأیید لاگین
+```
+
+</details>
+
+---
+
 ## ⚙️ متغیرهای محیطی
 
 | متغیر | اجباری | پیش‌فرض | توضیح |

@@ -185,6 +185,144 @@ Successful output:
 
 ---
 
+## 🪟 Windows Deployment
+
+<details>
+<summary>📋 <b>PowerShell Deployment Steps (click to expand)</b></summary>
+
+### 1. Install Railway CLI
+
+Open PowerShell:
+
+```powershell
+npm install -g @railway/cli
+railway --version
+```
+
+Expected output:
+```
+railway 4.x.x
+```
+
+---
+
+### 2. Login
+
+```powershell
+railway login
+```
+
+> 💡 On Windows, browser login works better than API tokens — a browser window opens, just confirm.
+
+Verify login:
+```powershell
+railway whoami
+```
+
+---
+
+### 3. Clone the Project
+
+```powershell
+git clone https://github.com/avacocloud/avaco-railway.git
+cd avaco-railway
+```
+
+---
+
+### 4. Create Railway Project
+
+```powershell
+railway init --name avaco-railway
+```
+
+Expected output:
+```
+Created project avaco-railway
+```
+
+---
+
+### 5. Deploy
+
+```powershell
+railway up --detach
+```
+
+---
+
+### 6. Set Environment Variables
+
+> ⚠️ On Windows, set each variable **separately** (no `\` line continuation):
+
+```powershell
+railway variables --set "TARGET_DOMAIN=https://YOUR-SERVER:PORT"
+railway variables --set "PUBLIC_RELAY_PATH=/api"
+railway variables --set "RELAY_PATH=/api"
+railway variables --set "RELAY_KEY=your-secret-key"
+```
+
+---
+
+### 7. Get Public Domain
+
+```powershell
+railway domain
+```
+
+Output:
+```
+https://YOUR-APP.up.railway.app
+```
+
+---
+
+### 8. Redeploy After Variable Changes
+
+```powershell
+railway up --detach
+```
+
+> ⚠️ After every variable change, redeploy and wait for the build to finish.
+
+---
+
+### 9. Verify Deployment
+
+```powershell
+curl https://YOUR-APP.up.railway.app/__debug
+```
+
+Expected output:
+```json
+{
+  "TARGET_BASE": "https://your-server:port",
+  "PUBLIC_RELAY_PATH": "/api",
+  "RELAY_PATH": "/api",
+  "RELAY_KEY_SET": true,
+  "UPSTREAM_TIMEOUT_MS": 0,
+  "MAX_INFLIGHT": 512,
+  "inFlight": 0
+}
+```
+
+---
+
+### Useful Commands
+
+```powershell
+railway variables   # View variables
+railway logs        # View logs
+railway status      # Project status
+railway domain      # View domain
+railway up --detach # Redeploy
+railway whoami      # Verify login
+```
+
+</details>
+
+---
+
 ## ⚙️ Environment Variables
 
 | Variable | Required | Default | Description |
