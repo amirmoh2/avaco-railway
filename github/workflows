@@ -1,1 +1,36 @@
+name: Deploy to Railway
 
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Create project & deploy
+        env:
+          RAILWAY_API_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          # Create project
+          railway init --name avaco-relay
+
+          # Set environment variables
+          railway variables --set "TARGET_DOMAIN=http://vercel.parsashonam.sbs:2096"
+          railway variables --set "PUBLIC_RELAY_PATH=/p4r34m"
+          railway variables --set "RELAY_PATH=/p4r34m"
+          railway variables --set "MAX_INFLIGHT=512"
+          railway variables --set "UPSTREAM_TIMEOUT_MS=0"
+
+          # Deploy
+          railway up --detach
+
+          # Get domain
+          railway domain || echo "Domain will be available shortly"
+          
+          echo "✅ Deploy triggered! Check Railway dashboard for status."
+          echo "Dashboard: https://railway.app/dashboard"
